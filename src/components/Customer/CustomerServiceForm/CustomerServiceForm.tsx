@@ -5,7 +5,7 @@ interface CustomerServiceFormProps {
     desc: string;
     cost: number;
   };
-  handleAddService: (e?: React.FormEvent) => void;
+  handleAddService: (e: React.FormEvent) => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isSaving: boolean;
 }

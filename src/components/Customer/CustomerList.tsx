@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { useCustomers } from "../../constants/Customer/useCustomers";
 import { CustomerCard } from "./CustomerCard";
+import { useCustomerContext } from "../../context/Customer/useCustomerContext";
 
 export const CustomerList = () => {
-  const { customers: initialData } = useCustomers();
-  const [ customers ] = useState(initialData);
+  const { customers } = useCustomerContext();
 
   return (
     <>

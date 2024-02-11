@@ -9,18 +9,17 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
     year,
     make,
     model,
-    service: initialServices,
+    service: services,
   } = customer;
 
   const {
-    services,
     isFormVisible,
     newService,
     isSaving,
     handleAddService,
     handleInputChange,
     toggleAddServiceFormVisibility,
-  } = useCustomerServiceForm(initialServices);
+  } = useCustomerServiceForm( customer.id);
 
   return (
     <div className="customer-card">
