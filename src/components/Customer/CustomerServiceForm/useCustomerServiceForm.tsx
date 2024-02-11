@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { promiseDelay } from "../../../utils/promiseDelay";
 import { useCustomerContext } from "../../../context/Customer/useCustomerContext";
+import { generateId } from "../../../utils/generateId";
 
 export const useCustomerServiceForm = (
   customerId: string
@@ -23,8 +24,7 @@ export const useCustomerServiceForm = (
         (customer) => customer.id === customerId
       );
       const updatedCustomer = customers[customerIndex];
-      const newServiceWithId = { ...newService, id: Math.random().toString() };
-      updatedCustomer.service = [...updatedCustomer.service, newServiceWithId];
+      updatedCustomer.service = [...updatedCustomer.service, newService];
       const updatedCustomers = [
         ...customers.slice(0, customerIndex),
         updatedCustomer,
@@ -39,6 +39,7 @@ export const useCustomerServiceForm = (
     setNewService((prevService) => ({
       ...prevService,
       [name]: value,
+      id: generateId(),
     }));
   };
 

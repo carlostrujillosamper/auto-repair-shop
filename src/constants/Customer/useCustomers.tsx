@@ -1,15 +1,16 @@
 import { useMemo } from "react";
 import { CUSTOMERS } from "./customers";
+import { generateId } from "../../utils/generateId";
 
 export const useCustomers = () => {
   const customers = useMemo(
     () =>
       CUSTOMERS.map((customer) => ({
         ...customer,
-        id: Math.random().toString(36).slice(2, 9),
+        id: generateId(),
         service: customer.service.map((service) => ({
           ...service,
-          id: Math.random().toString(36).slice(2, 9),
+          id: generateId(),
         })),
       })),
     []
