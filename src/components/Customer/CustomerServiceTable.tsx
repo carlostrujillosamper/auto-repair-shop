@@ -14,7 +14,7 @@ import { formatToReadableDate } from "../../utils/formatToReadableDate";
 export const CustomerServiceTable = ({ services }: { services: Service[] }) => {
   return (
     <TableContainer>
-      <Table variant="simple" colorScheme="teal">
+      <Table variant="simple" colorScheme="teal" size="sm">
         <Thead bgColor={"#F4F8FA"}>
           <Tr>
             <Th >Code</Th>

@@ -5,6 +5,8 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Text,
+  Box
 } from "@chakra-ui/react";
 
 interface CustomerServiceFormProps {
@@ -18,6 +20,7 @@ interface CustomerServiceFormProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isSaving: boolean;
 }
+
 export const CustomerServiceForm = ({
   newService,
   handleAddService,
@@ -26,8 +29,8 @@ export const CustomerServiceForm = ({
 }: CustomerServiceFormProps) => {
   return (
     <>
-      <form onSubmit={handleAddService}>
-        <FormControl>
+      <form onSubmit={handleAddService} aria-live="polite">
+        <FormControl role="presentation">
           <FormLabel htmlFor="code">Code</FormLabel>
           <Input
             type="number"
@@ -37,7 +40,12 @@ export const CustomerServiceForm = ({
             disabled={isSaving}
             isRequired
             id="code"
+            aria-describedby="code-description"
           />
+          <Text id="code-description">
+            Please enter the code for the service.
+          </Text>
+
           <FormLabel htmlFor="date">Date</FormLabel>
           <Input
             type="date"
@@ -47,7 +55,12 @@ export const CustomerServiceForm = ({
             disabled={isSaving}
             isRequired
             id="date"
+            aria-describedby="date-description"
           />
+          <Text id="date-description">
+            Please enter the date for the service.
+          </Text>
+
           <FormLabel htmlFor="desc">Description</FormLabel>
           <Input
             type="textArea"
@@ -56,7 +69,12 @@ export const CustomerServiceForm = ({
             onChange={handleInputChange}
             disabled={isSaving}
             id="desc"
+            aria-describedby="desc-description"
           />
+          <Text id="desc-description">
+            Please enter a description for the service.
+          </Text>
+
           <FormLabel htmlFor="cost">Cost</FormLabel>
           <InputGroup>
             <InputLeftAddon>$</InputLeftAddon>
@@ -69,11 +87,17 @@ export const CustomerServiceForm = ({
               isRequired
               required
               id="cost"
+              aria-describedby="cost-description"
             />
           </InputGroup>
-          <Button type="submit" disabled={isSaving}>
-            {isSaving ? "Saving..." : "Add Service"}
-          </Button>
+          <Text id="cost-description">
+            Please enter the cost for the service.
+          </Text>
+          <Box width="100%" textAlign={"right"} marginTop={2}>
+            <Button type="submit" disabled={isSaving} aria-busy={isSaving}>
+              {isSaving ? "Saving..." : "Add Service"}
+            </Button>
+          </Box>
         </FormControl>
       </form>
     </>

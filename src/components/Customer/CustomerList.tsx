@@ -7,7 +7,7 @@ export const CustomerList = () => {
 
   return (
     <>
-      <SimpleGrid columns={1} spacing={10}>
+      <SimpleGrid columns={2} spacing={5}>
         {customers.map((customer) => (
           <CustomerCard key={customer.id} customer={customer} />
         ))}

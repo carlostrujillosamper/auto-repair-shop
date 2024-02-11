@@ -7,7 +7,7 @@ import {
   StackDivider,
   Box,
   Button,
-  Flex
+  Flex,
 } from "@chakra-ui/react";
 import { CustomerServiceForm } from "./CustomerServiceForm/CustomerServiceForm";
 import { useCustomerServiceForm } from "./CustomerServiceForm/useCustomerServiceForm";
@@ -34,9 +34,13 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
   } = useCustomerServiceForm(customer.id);
 
   return (
-    <Card>
+    <Card role="region" aria-labelledby={`customer-${customer.id}-heading`}>
       <CardHeader>
-        <Heading size="md" textAlign={"left"}>
+        <Heading
+          size="md"
+          textAlign={"left"}
+          id={`customer-${customer.id}-heading`}
+        >
           {firstName} {lastName}
         </Heading>
       </CardHeader>
@@ -49,7 +53,12 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
             </Heading>
           </Box>
           <Box>
-            <Heading marginBottom={3} size="xs" textTransform="uppercase" textAlign={"left"}>
+            <Heading
+              marginBottom={3}
+              size="xs"
+              textTransform="uppercase"
+              textAlign={"left"}
+            >
               Services
             </Heading>
             <CustomerServiceTable services={services} />

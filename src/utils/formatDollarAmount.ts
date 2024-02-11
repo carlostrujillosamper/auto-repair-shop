@@ -5,7 +5,6 @@ export const formatDollarAmount = (amount: number | undefined) => {
   if (!amount) {
     return "$--";
   }
-  console.log(typeof amount, amount)
   const toFixedAmount = Number(amount.toFixed(2));
   const numberWithCommas = toFixedAmount.toLocaleString("en-US");
   const numberWithCommasSplittedByCents = numberWithCommas.split(".");
