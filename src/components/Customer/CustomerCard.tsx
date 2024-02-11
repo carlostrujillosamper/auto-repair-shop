@@ -1,22 +1,6 @@
-interface Customer {
-  firstName: string;
-  lastName: string;
-  year: number;
-  make: string;
-  model: string;
-  service: Service[];
-}
-
-interface Service {
-  code: number;
-  desc: string;
-  date: string;
-  cost: number;
-}
-
-interface CustomerCardProps {
-  customer: Customer;
-}
+import { CustomerServiceForm } from "./CustomerServiceForm/CustomerServiceForm";
+import { useCustomerServiceForm } from "./CustomerServiceForm/useCustomerServiceForm";
+import { CustomerCardProps } from "./types";
 
 export const CustomerCard = ({ customer }: CustomerCardProps) => {
   const {
@@ -25,8 +9,19 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
     year,
     make,
     model,
-    service: services,
+    service: initialServices,
   } = customer;
+
+  const {
+    services,
+    isFormVisible,
+    newService,
+    isSaving,
+    handleAddService,
+    handleInputChange,
+    toggleAddServiceFormVisibility,
+  } = useCustomerServiceForm(initialServices);
+
   return (
     <div className="customer-card">
       <h3>
@@ -37,13 +32,32 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
       </p>
       <ul>
         {services.map((service) => (
-          <li key={service.code}>
+          <li key={service.id}>
             <p>{service.desc}</p>
+            <p>{service.code}</p>
             <p>{service.date}</p>
             <p>{service.cost}</p>
           </li>
         ))}
       </ul>
+      {!isFormVisible ? (
+        <button type="button" onClick={toggleAddServiceFormVisibility}>
+          New Service
+        </button>
+      ) : (
+        <button type="button" onClick={toggleAddServiceFormVisibility}>
+          Cancel New Service
+        </button>
+      )}
+
+      {isFormVisible && (
+        <CustomerServiceForm
+          newService={newService}
+          handleAddService={handleAddService}
+          handleInputChange={handleInputChange}
+          isSaving={isSaving}
+        />
+      )}
     </div>
   );
 };
