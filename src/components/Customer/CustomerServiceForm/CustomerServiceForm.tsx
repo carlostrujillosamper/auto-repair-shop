@@ -1,3 +1,12 @@
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+} from "@chakra-ui/react";
+
 interface CustomerServiceFormProps {
   newService: {
     code: number;
@@ -9,55 +18,64 @@ interface CustomerServiceFormProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isSaving: boolean;
 }
-export const CustomerServiceForm = ({ newService, handleAddService, handleInputChange, isSaving }: CustomerServiceFormProps) => {
-
+export const CustomerServiceForm = ({
+  newService,
+  handleAddService,
+  handleInputChange,
+  isSaving,
+}: CustomerServiceFormProps) => {
   return (
     <>
-        <form onSubmit={handleAddService}>
-          <label htmlFor="code">Code</label>
-          <input
+      <form onSubmit={handleAddService}>
+        <FormControl>
+          <FormLabel htmlFor="code">Code</FormLabel>
+          <Input
             type="number"
             name="code"
             value={newService.code}
             onChange={handleInputChange}
             disabled={isSaving}
-            required
+            isRequired
             id="code"
           />
-          <label htmlFor="date">Date</label>
-          <input
-            type="text"
+          <FormLabel htmlFor="date">Date</FormLabel>
+          <Input
+            type="date"
             name="date"
             value={newService.date}
             onChange={handleInputChange}
             disabled={isSaving}
-            required
+            isRequired
             id="date"
           />
-          <label htmlFor="desc">Description</label>
-          <input
-            type="text"
+          <FormLabel htmlFor="desc">Description</FormLabel>
+          <Input
+            type="textArea"
             name="desc"
             value={newService.desc}
             onChange={handleInputChange}
             disabled={isSaving}
-            required
             id="desc"
           />
-          <label htmlFor="cost">Cost</label>
-          <input
-            type="number"
-            name="cost"
-            value={newService.cost}
-            onChange={handleInputChange}
-            disabled={isSaving}
-            required
-            id="cost"
-          />
-          <button type="submit" disabled={isSaving}>
+          <FormLabel htmlFor="cost">Cost</FormLabel>
+          <InputGroup>
+            <InputLeftAddon>$</InputLeftAddon>
+            <Input
+              type="number"
+              name="cost"
+              value={newService.cost}
+              onChange={handleInputChange}
+              disabled={isSaving}
+              isRequired
+              required
+              id="cost"
+            />
+          </InputGroup>
+          <Button type="submit" disabled={isSaving}>
             {isSaving ? "Saving..." : "Add Service"}
-          </button>
-        </form>
+          </Button>
+        </FormControl>
+      </form>
     </>
   );
 };

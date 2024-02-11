@@ -2,21 +2,21 @@ import { useState } from "react";
 import { promiseDelay } from "../../../utils/promiseDelay";
 import { useCustomerContext } from "../../../context/Customer/useCustomerContext";
 import { generateId } from "../../../utils/generateId";
+import { Service } from "../types";
 
-export const useCustomerServiceForm = (
-  customerId: string
-) => {
+interface Error {
+  code?: string;
+  desc?: string;
+  date?: string;
+  cost?: string;
+}
+
+export const useCustomerServiceForm = (customerId: string) => {
   const { customers, setCustomers } = useCustomerContext();
   const [isSaving, setIsSaving] = useState(false);
-  const [newService, setNewService] = useState({
-    code: 0,
-    date: "",
-    cost: 0,
-    desc: "",
-    id: "",
-  });
-
+  const [newService, setNewService] = useState({} as Service);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [errors, setErrors] = useState({} as Error);
 
   const save = async (): Promise<void> => {
     return promiseDelay(3000).then(() => {
@@ -38,26 +38,67 @@ export const useCustomerServiceForm = (
     const { name, value } = e.target;
     setNewService((prevService) => ({
       ...prevService,
-      [name]: value,
+      [name]: parseFormValue({name, value}),
       id: generateId(),
     }));
   };
 
   const handleAddService = async (e: React.FormEvent) => {
-    console.log(e);
     e.preventDefault();
     setIsSaving(true);
     try {
-      await save();
+      if (validateForm()) {
+        await save();
+      }
     } catch (e) {
       console.error(e);
     } finally {
       setIsSaving(false);
+      setIsFormVisible(false);
     }
   };
 
   const toggleAddServiceFormVisibility = () => {
     setIsFormVisible((prevIsFormVisible) => !prevIsFormVisible);
+  };
+
+  const parseFormValue = ({name, value} : {name : string , value : string}) => {
+    if (name === "cost") {
+      return Number(value);
+    }
+    if (name === "code") {
+      return Number(value);
+    }
+    return value;
+  };
+
+  const validateForm = (): boolean => {
+    const { code, desc, date, cost } = newService;
+    const errors = {} as Error;
+    let isValid = true;
+
+    if (!code || isNaN(Number(code))) {
+      errors.code = "Code must be a number";
+      isValid = false;
+    }
+
+    if (desc && typeof desc !== "string") {
+      errors.desc = "Description must be a string";
+      isValid = false;
+    }
+
+    if (!date || typeof date !== "string") {
+      errors.date = "Date must be a string";
+      isValid = false;
+    }
+
+    if (!cost || isNaN(Number(cost))) {
+      errors.cost = "Cost must be a number";
+      isValid = false;
+    }
+
+    setErrors(errors);
+    return isValid;
   };
 
   return {
@@ -67,5 +108,6 @@ export const useCustomerServiceForm = (
     handleAddService,
     handleInputChange,
     toggleAddServiceFormVisibility,
+    errors,
   };
 };
