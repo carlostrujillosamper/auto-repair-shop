@@ -52,15 +52,16 @@ export const CustomerCard = ({ customer }: CustomerCardProps) => {
               {make} {model} {year}
             </Heading>
           </Box>
+          <Heading
+            marginBottom={3}
+            size="xs"
+            textTransform="uppercase"
+            textAlign={"left"}
+            color="grey"
+          >
+            Services
+          </Heading>
           <Box>
-            <Heading
-              marginBottom={3}
-              size="xs"
-              textTransform="uppercase"
-              textAlign={"left"}
-            >
-              Services
-            </Heading>
             <CustomerServiceTable services={services} />
             <Flex marginTop={3} w="100%" justifyContent="flex-end">
               {!isFormVisible ? (

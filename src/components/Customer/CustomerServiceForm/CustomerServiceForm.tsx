@@ -6,7 +6,7 @@ import {
   InputGroup,
   InputLeftAddon,
   Text,
-  Box
+  Box,
 } from "@chakra-ui/react";
 
 interface CustomerServiceFormProps {
@@ -42,7 +42,7 @@ export const CustomerServiceForm = ({
             id="code"
             aria-describedby="code-description"
           />
-          <Text id="code-description">
+          <Text id="code-description" color="grey">
             Please enter the code for the service.
           </Text>
 
@@ -57,7 +57,7 @@ export const CustomerServiceForm = ({
             id="date"
             aria-describedby="date-description"
           />
-          <Text id="date-description">
+          <Text id="date-description" color="grey">
             Please enter the date for the service.
           </Text>
 
@@ -71,7 +71,7 @@ export const CustomerServiceForm = ({
             id="desc"
             aria-describedby="desc-description"
           />
-          <Text id="desc-description">
+          <Text id="desc-description" color="grey">
             Please enter a description for the service.
           </Text>
 
@@ -90,7 +90,7 @@ export const CustomerServiceForm = ({
               aria-describedby="cost-description"
             />
           </InputGroup>
-          <Text id="cost-description">
+          <Text id="cost-description" color="grey">
             Please enter the cost for the service.
           </Text>
           <Box width="100%" textAlign={"right"} marginTop={2}>
