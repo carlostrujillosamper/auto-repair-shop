@@ -7,6 +7,8 @@ import {
   InputLeftAddon,
   Text,
   Box,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 
 interface CustomerServiceFormProps {

@@ -17,11 +17,13 @@ export const useCustomerServiceForm = (customerId: string) => {
   const [newService, setNewService] = useState({} as Service);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [errors, setErrors] = useState({} as Error);
+  const [savedSuccesfully, setSavedSuccesfully] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   const save = async (): Promise<void> => {
     return promiseDelay(3000).then(() => {
       const customerIndex = customers.findIndex(
-        (customer) => customer.id === customerId
+        (customer) => customer.id === customerId,
       );
       const updatedCustomer = customers[customerIndex];
       updatedCustomer.service = [...updatedCustomer.service, newService];
@@ -38,7 +40,7 @@ export const useCustomerServiceForm = (customerId: string) => {
     const { name, value } = e.target;
     setNewService((prevService) => ({
       ...prevService,
-      [name]: parseFormValue({name, value}),
+      [name]: parseFormValue({ name, value }),
       id: generateId(),
     }));
   };
@@ -49,9 +51,11 @@ export const useCustomerServiceForm = (customerId: string) => {
     try {
       if (validateForm()) {
         await save();
+        setSavedSuccesfully(true);
       }
     } catch (e) {
       console.error(e);
+      setSaveError(false);
     } finally {
       setIsSaving(false);
       setIsFormVisible(false);
@@ -62,7 +66,7 @@ export const useCustomerServiceForm = (customerId: string) => {
     setIsFormVisible((prevIsFormVisible) => !prevIsFormVisible);
   };
 
-  const parseFormValue = ({name, value} : {name : string , value : string}) => {
+  const parseFormValue = ({ name, value }: { name: string; value: string }) => {
     if (name === "cost") {
       return Number(value);
     }
@@ -109,5 +113,7 @@ export const useCustomerServiceForm = (customerId: string) => {
     handleInputChange,
     toggleAddServiceFormVisibility,
     errors,
+    saveError,
+    savedSuccesfully,
   };
 };
